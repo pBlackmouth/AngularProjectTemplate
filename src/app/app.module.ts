@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { AppFirebaseModule } from './app-firebase/app-firebase.module';
 
 import { AppComponent } from './app.component';
+import { WindowService } from './services/window.service';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { AppComponent } from './app.component';
     ReactiveFormsModule,
     AppFirebaseModule
   ],
-  providers: [],
+  providers: [WindowService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
