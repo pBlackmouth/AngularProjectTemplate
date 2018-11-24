@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { AngularFireAuth } from "angularfire2/auth";
 import { auth } from "firebase";
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-root',
@@ -9,13 +11,17 @@ import { auth } from "firebase";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  email: string;
-  password: string;
+  signUpForm: FormGroup;
+  signInMode = false;
 
   constructor(
-    public afAuth: AngularFireAuth
+    public afAuth: AngularFireAuth,
+    private fb: FormBuilder
   ) {
-
+    this.signUpForm = fb.group({
+      email: ['', [ Validators.required ]],
+      password: ['', [ Validators.required ]]
+    })
   }
 
   ngOnInit() {
@@ -77,15 +83,31 @@ export class AppComponent implements OnInit {
     this.afAuth.auth
         .signInAnonymously()
         .then((userCredentials) => console.log(userCredentials));
+  }  
+
+  signInOrSignUp() {
+    let email = this.getFormValue('email');
+    let password = this.getFormValue('password');
+
+    this.signInMode ? this.afAuth.auth.signInWithEmailAndPassword(email,password)
+                    : this.afAuth.auth.createUserWithEmailAndPassword(email, password);
   }
 
-  // signUp() {
-  //   this.afAuth.auth
-  //       .createUserWithEmailAndPassword(this.email, this.password);
-  // }
+  toggleSignInMode() {
+    this.signInMode = !this.signInMode;
+  }
 
   logout() {
     this.afAuth.auth.signOut();
+  }
+
+  getFormValue( controlName: string) {
+    let value = null;
+
+    if(this.signUpForm)
+      value = this.signUpForm.get(controlName).value;
+
+    return value;
   }
 
 }
