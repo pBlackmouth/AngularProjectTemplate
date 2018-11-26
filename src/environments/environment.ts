@@ -11,6 +11,16 @@ export const environment = {
     projectId: "my-sample-project-40b30",
     storageBucket: "my-sample-project-40b30.appspot.com",
     messagingSenderId: "456208484053"
+  },
+  modes: {
+    POPUP: 'popup',
+    REDIRECT: 'redirect'
+  },
+  providers: {
+    GOOGLE: 'google',
+    FACEBOOK: 'facebook',
+    TWITTER: 'twitter',
+    GITHUB: 'github'
   }
 };
 

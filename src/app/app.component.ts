@@ -5,6 +5,8 @@ import { auth } from "firebase";
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { stringify } from '@angular/compiler/src/util';
 import { WindowService } from './services/window.service';
+import { AuthService } from './services/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -18,11 +20,14 @@ export class AppComponent implements OnInit, AfterViewInit {
   phoneSignIn = true;
   winRef: any;
   disableOTPSendButton = true;
+  providers = environment.providers;
+  modes = environment.modes;
 
   constructor(
     public afAuth: AngularFireAuth,
     private fb: FormBuilder,
-    private winSvc: WindowService
+    private winSvc: WindowService,
+    private authSvc: AuthService
   ) {
     this.signUpForm = fb.group({
       email: ['', [ Validators.required ]],
@@ -73,53 +78,10 @@ export class AppComponent implements OnInit, AfterViewInit {
         .then((userCredentials) => console.log(userCredentials));
   }
 
-  googleSignInViaPopup() {
-    this.afAuth.auth
-        .signInWithPopup(new auth.GoogleAuthProvider())
-        .then((userCredentials) => console.log(userCredentials));
+  signInWithModeAndProvider(mode: string, provider: string) {
+    this.authSvc.signIn(mode,provider);
   }
-
-  googleSignInViaRedirect() {
-    this.afAuth.auth
-        .signInWithRedirect(new auth.GoogleAuthProvider())
-        .then((userCredentials) => console.log(userCredentials));
-  }
-
-  facebookSignInViaPopup() {
-    this.afAuth.auth
-        .signInWithPopup(new auth.FacebookAuthProvider())
-        .then((userCredentials) => console.log(userCredentials));
-  }
-
-  facebookSignInViaRedirect() {
-    this.afAuth.auth
-        .signInWithRedirect(new auth.FacebookAuthProvider())
-        .then((userCredentials) => console.log(userCredentials));
-  }
-
-  twitterSignInViaPopup() {
-    this.afAuth.auth
-        .signInWithPopup(new auth.TwitterAuthProvider())
-        .then((userCredentials) => console.log(userCredentials));
-  }
-
-  twitterSignInViaRedirect() {
-    this.afAuth.auth
-        .signInWithRedirect(new auth.TwitterAuthProvider())
-        .then((userCredentials) => console.log(userCredentials));
-  }
-
-  githubSignInViaPopup() {
-    this.afAuth.auth
-        .signInWithPopup(new auth.GithubAuthProvider())
-        .then((userCredentials) => console.log(userCredentials));
-  }
-
-  githubSignInViaRedirect() {
-    this.afAuth.auth
-        .signInWithRedirect(new auth.GithubAuthProvider())
-        .then((userCredentials) => console.log(userCredentials));
-  }
+  
 
   signInAnonymously() {
     this.afAuth.auth
