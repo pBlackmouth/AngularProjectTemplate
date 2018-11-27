@@ -1,0 +1,15 @@
+<form [formGroup]="signPhoneForm" class="form-group">
+  <div class="form-group">
+    <label for="phoneNumber">Phone Number</label>
+    <input formControlName="phoneNumber" name="phoneNumber" type="text" class="form-control">
+  </div>
+  <div id="recaptcha-container"></div>
+  <button class="btn btn-primary btn-block" (click)="sendOTP()" [disabled]="disableOTPSendButton">Send OTP</button>
+  <hr>
+  <div class="form-group">
+    <label for="otp">OTP</label>
+    <input formControlName="otp" name="otp" type="text" class="form-control">
+  </div>
+  <button class="btn btn-primary btn-block" (click)="verifyOTP()" >Verify OTP</button>
+  <button class="btn btn-primary btn-block" (click)="authSvc.togglePhoneSignIn()">Cancel</button>
+</form>

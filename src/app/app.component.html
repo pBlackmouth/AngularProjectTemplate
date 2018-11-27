@@ -1,95 +1,15 @@
 <div class="container">
   <div *ngIf="afAuth.authState | async as user; else login">
-    <div class="card" style="width: 20rem;">
-      <img class="card-img-top" [src]="user.photoURL" [alt]="user.displayName">
-      <div class="card-body">
-        <h5 class="card-title">{{ user.displayName }}</h5>
-        <p class="card-text">{{ user.email }}</p>
-        <button class="btn btn-danger btn-block" (click)="logout()">
-          <i class="fas fa-sign-out-alt"></i> Logout
-        </button>
-      </div>
-    </div>
+   <app-user-details></app-user-details>
   </div>
 
   <ng-template #login>
-    <div class="row" *ngIf="!phoneSignIn; else phone">
-      <div class="col">
-        <div class="row">
-          <div class="col">
-            <button class="btn btn-primary btn-block google" (click)="signInWithModeAndProvider(modes.POPUP,providers.GOOGLE)">
-              <i class="fab fa-google"></i> Google Login with Popup
-            </button>
-            <button class="btn btn-primary btn-block facebook" (click)="signInWithModeAndProvider(modes.POPUP,providers.FACEBOOK)">
-              <i class="fab fa-facebook-f"></i> Facebook Login with Popup
-            </button>
-            <button class="btn btn-primary btn-block twitter" (click)="signInWithModeAndProvider(modes.POPUP,providers.TWITTER)">
-              <i class="fab fa-twitter"></i> Twitter Login with Popup
-            </button>
-            <button class="btn btn-primary btn-block github" (click)="signInWithModeAndProvider(modes.POPUP,providers.GITHUB)">
-              <i class="fab fa-github"></i> GitHub Login with Popup
-            </button>
-          </div>
-          <div class="col">
-            <button class="btn btn-primary btn-block google" (click)="signInWithModeAndProvider(modes.REDIRECT,providers.GOOGLE)">
-              <i class="fab fa-google"></i> Google Login with Redirect
-            </button>
-            <button class="btn btn-primary btn-block facebook" (click)="signInWithModeAndProvider(modes.REDIRECT,providers.FACEBOOK)">
-              <i class="fab fa-facebook-f"></i> Facebook Login with Redirect
-            </button>
-            <button class="btn btn-primary btn-block twitter" (click)="signInWithModeAndProvider(modes.REDIRECT,providers.TWITTER)">
-              <i class="fab fa-twitter"></i> Twitter Login with Redirect
-            </button>
-            <button class="btn btn-primary btn-block github" (click)="signInWithModeAndProvider(modes.REDIRECT,providers.GITHUB)">
-              <i class="fab fa-github"></i> GitHub Login with Redirect
-            </button>
-          </div>
-        </div>
-        <hr>
-        <div class="row">
-          <button class="btn btn-primary btn-block email" (click)="toggleSignInMode()">
-            <i class="far fa-envelope"></i> {{ signInMode ? 'Sign In' : 'Sign Up' }} with Email/Password
-          </button>
-          <button class="btn btn-primary btn-block phone" (click)="togglePhoneSignIn()">
-            <i class="fas fa-phone"></i> Login with Phone
-          </button>
-          <button class="btn btn-primary btn-block anonymous" (click)="signInAnonymously()">
-            <i class="fas fa-user-secret"></i> Login with Anonymous
-          </button>
-        </div>
-      </div>
-      <div class="col">
-        <form [formGroup]="signUpForm">
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input formControlName="email" name="email" type="email" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input formControlName="password" name="password" type="password" class="form-control">
-          </div>
-          <button [disabled]="signUpForm.invalid" class="btn btn-primary btn-block" (click)="signInOrSignUp()">
-            <i class="fas fa-sign-in-alt"></i> {{ signInMode ? 'Sign In' : 'Sign Up' }}
-          </button>
-        </form>
-      </div>
+    <div class="row" *ngIf="authSvc.phoneSignIn; else loginOptions">
+      <app-phone-signin></app-phone-signin>      
     </div>
-    <ng-template #phone>
-      <form [formGroup]="signPhoneForm" class="form-group">
-        <div class="form-group">
-          <label for="phoneNumber">Phone Number</label>
-          <input formControlName="phoneNumber" name="phoneNumber" type="text" class="form-control">
-        </div>
-        <div id="recaptcha-container"></div>
-        <button class="btn btn-primary btn-block" (click)="sendOTP()" [disabled]="disableOTPSendButton">Send OTP</button>
-        <hr>
-        <div class="form-group">
-          <label for="otp">OTP</label>
-          <input formControlName="otp" name="otp" type="text" class="form-control">
-        </div>
-        <button class="btn btn-primary btn-block" (click)="verifyOTP()" >Verify OTP</button>
-        <button class="btn btn-primary btn-block" (click)="togglePhoneSignIn()">Cancel</button>
-      </form>
+    <ng-template #loginOptions>
+      <app-login-options></app-login-options>
+      <app-signin-signup></app-signin-signup>
     </ng-template>
   </ng-template>
 

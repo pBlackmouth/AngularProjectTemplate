@@ -7,10 +7,19 @@ import { AppFirebaseModule } from './app-firebase/app-firebase.module';
 import { AppComponent } from './app.component';
 import { WindowService } from './services/window.service';
 import { AuthService } from './services/auth.service';
+import { LoginOptionsComponent } from './components/login-options/login-options.component';
+import { SigninSignupComponent } from './components/signin-signup/signin-signup.component';
+import { PhoneSigninComponent } from './components/phone-signin/phone-signin.component';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { CommonService } from './services/common.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginOptionsComponent,
+    SigninSignupComponent,
+    PhoneSigninComponent,
+    UserDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -18,7 +27,7 @@ import { AuthService } from './services/auth.service';
     ReactiveFormsModule,
     AppFirebaseModule
   ],
-  providers: [WindowService, AuthService],
+  providers: [WindowService, AuthService, CommonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

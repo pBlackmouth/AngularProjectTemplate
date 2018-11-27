@@ -8,6 +8,9 @@ import { auth } from 'firebase';
 })
 export class AuthService {
 
+  signInMode = false;
+  phoneSignIn = false;
+
   constructor(
     private afAuth: AngularFireAuth
   ) { }
@@ -39,5 +42,29 @@ export class AuthService {
   signIn(mode: string, provider: string) {
     mode === environment.modes.POPUP  ? this.afAuth.auth.signInWithPopup(this.getProviderInstance(provider))
                                       : this.afAuth.auth.signInWithRedirect(this.getProviderInstance(provider));
+  }
+
+  signInOrSignUp( email: string, password: string) {    
+
+    this.signInMode ? this.afAuth.auth.signInWithEmailAndPassword(email,password)
+                    : this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+  }
+
+  signInAnonymously() {
+    this.afAuth.auth
+        .signInAnonymously()
+        .then((userCredentials) => console.log(userCredentials));
+  }  
+
+  logout() {
+    this.afAuth.auth.signOut();
+  }
+
+  togglePhoneSignIn() {
+    this.phoneSignIn = !this.phoneSignIn;
+  }
+
+  toggleSignInMode() {
+    this.signInMode = !this.signInMode;
   }
 }
