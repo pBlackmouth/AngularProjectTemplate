@@ -11,3 +11,31 @@
 .github { background-color: #333333; }
 .email { background-color: #FFFFFF; color: #757575; }
 .phone { background-color: #02BD7E; }
+
+
+
+.navbar-button-container {
+    position: relative;
+    height: 40px;
+    max-height: 50px;
+    min-height: 30px;
+    background-color: red;
+    width: auto;
+    padding: 5px;
+    margin:4px;
+}
+.navbar-button-container button {
+    margin-right: 7px;
+}
+.navbar-button-container button:last-child {
+    margin-right: 0;
+}
+.navbar-button-container.right {
+    right: 0;
+    float: right;
+}
+
+.navbar-button-container.left {
+    left: 0;
+    float: left;
+}

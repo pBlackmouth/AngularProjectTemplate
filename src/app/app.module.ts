@@ -12,6 +12,8 @@ import { SigninSignupComponent } from './components/signin-signup/signin-signup.
 import { PhoneSigninComponent } from './components/phone-signin/phone-signin.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { CommonService } from './services/common.service';
+import { NavbarSigninSignupComponent } from './app-layout/components/navbar-signin-signup/navbar-signin-signup.component';
+import { AppLayoutModule } from './app-layout/app-layout.module';
 
 @NgModule({
   declarations: [
@@ -19,13 +21,14 @@ import { CommonService } from './services/common.service';
     LoginOptionsComponent,
     SigninSignupComponent,
     PhoneSigninComponent,
-    UserDetailsComponent
+    UserDetailsComponent    
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    AppFirebaseModule
+    AppFirebaseModule,
+    AppLayoutModule
   ],
   providers: [WindowService, AuthService, CommonService],
   bootstrap: [AppComponent]
